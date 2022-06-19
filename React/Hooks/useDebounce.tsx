@@ -22,5 +22,4 @@ const useDebounce = (value: type, delay: number): { debounceValue: type; isDebou
 /*
 in component:
 useDebounce(value, delay)
-
 */
