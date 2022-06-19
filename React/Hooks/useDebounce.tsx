@@ -18,3 +18,9 @@ const useDebounce = (value: type, delay: number): { debounceValue: type; isDebou
 
   return { debouncedValue, isDebouncing };
 };
+
+/*
+in component:
+useDebounce(value, delay)
+
+*/
