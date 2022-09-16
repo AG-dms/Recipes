@@ -43,7 +43,6 @@ export function useSocket({ token }: { token: string | null }) {
   }, []);
 
   useEffect(() => {
-    // console.log('HOPPER_PROFILE_GATEWAY', 'useEffect', 'token', token);
 
     if (!token || appStateVisible !== "active") {
       return;

@@ -22,7 +22,6 @@ export const InterceptorsProvider: React.FC<{ children: any }> = ({ children }) 
     return config;
   });
 
-  const dispatch = useAppDispatch();
 
   let isRefreshing = false;
   let requestQueue: ((data: string) => void)[] = [];
@@ -69,6 +68,7 @@ export const InterceptorsProvider: React.FC<{ children: any }> = ({ children }) 
       return Promise.reject(error);
     }
   );
+  
 
   return <>{children}</>;
 };
