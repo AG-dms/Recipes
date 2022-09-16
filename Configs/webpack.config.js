@@ -1,74 +1,74 @@
-const path = require("path");
-const HTMLWebPackPlugin = require("html-webpack-plugin");
-const RobotstxtPlugin = require("robotstxt-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const MiniCSSExtractPlugin = require("mini-css-extract-plugin");
-const CSSMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const FontPreloadPlugin = require("webpack-font-preload-plugin");
-const CircularPlugin = require("circular-dependency-plugin");
-const Dotenv = require("dotenv-webpack");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+const path = require('path');
+const HTMLWebPackPlugin = require('html-webpack-plugin');
+const RobotstxtPlugin = require('robotstxt-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
+const CSSMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const FontPreloadPlugin = require('webpack-font-preload-plugin');
+const CircularPlugin = require('circular-dependency-plugin');
+const Dotenv = require('dotenv-webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = (_, args) => {
-  const mode = args.mode || "development";
-  const isProduction = mode === "production";
+  const mode = args.mode || 'development';
+  const isProduction = mode === 'production';
   const defaultConfig = {
     mode,
-    target: "web",
-    entry: "./src/index.tsx",
-    devtool: "source-map",
+    target: 'web',
+    entry: './src/index.tsx',
+    devtool: 'source-map',
     resolve: {
       // fallback: { path: false },
-      extensions: [".ts", ".tsx", ".jsx", ".js", ".json"],
+      extensions: ['.ts', '.tsx', '.jsx', '.js', '.json'],
       alias: {
-        "@": ["./src/"],
-        "@scenes": path.resolve(__dirname, "src/scenes/"),
+        '@': ['./src/'],
+        '@scenes': path.resolve(__dirname, 'src/scenes/'),
       },
     },
     module: {
       rules: [
         {
           test: /fonts[\\/].*\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-          type: "asset/resource",
+          type: 'asset/resource',
           generator: {
-            filename: "[name][ext]",
+            filename: '[name][ext]',
           },
         },
 
         {
           test: /\.svg$/,
-          use: [{ loader: "svg-url-loader" }],
+          use: [{ loader: 'svg-url-loader' }],
         },
 
         {
           test: /\.(png|jpe?g|svg|gif)$/i,
-          type: "asset/resource",
+          type: 'asset/resource',
         },
 
         {
           test: /\.(webp)$/i,
-          use: ["file-loader", "webp-loader"],
+          use: ['file-loader', 'webp-loader'],
         },
 
         {
           test: /\.tsx?$/,
           use: [
             {
-              loader: "babel-loader",
+              loader: 'babel-loader',
               options: {
                 cacheCompression: false,
                 cacheDirectory: true,
               },
             },
             {
-              loader: "ts-loader",
+              loader: 'ts-loader',
               options: {
                 transpileOnly: true,
               },
             },
           ],
-          exclude: "/node_modules/",
+          exclude: '/node_modules/',
         },
 
         {
@@ -76,7 +76,7 @@ module.exports = (_, args) => {
           use: [
             MiniCSSExtractPlugin.loader,
             {
-              loader: "css-loader",
+              loader: 'css-loader',
               options: {
                 sourceMap: true,
               },
@@ -89,12 +89,12 @@ module.exports = (_, args) => {
           exclude: /\.module\.s[ac]ss$/i,
           use: [
             MiniCSSExtractPlugin.loader,
-            { loader: "css-loader", options: { sourceMap: true } },
+            { loader: 'css-loader', options: { sourceMap: true } },
             {
-              loader: "sass-loader",
+              loader: 'sass-loader',
               options: {
                 sourceMap: true,
-                implementation: require("sass"),
+                implementation: require('sass'),
               },
             },
           ],
@@ -105,20 +105,20 @@ module.exports = (_, args) => {
           use: [
             MiniCSSExtractPlugin.loader,
             {
-              loader: "css-loader",
+              loader: 'css-loader',
               options: {
                 modules: {
                   auto: true,
-                  localIdentName: "[path][name]__[local]--[hash:base64:5]",
+                  localIdentName: '[path][name]__[local]--[hash:base64:5]',
                 },
                 sourceMap: true,
               },
             },
             {
-              loader: "sass-loader",
+              loader: 'sass-loader',
               options: {
                 sourceMap: true,
-                implementation: require("sass"),
+                implementation: require('sass'),
               },
             },
           ],
@@ -129,8 +129,8 @@ module.exports = (_, args) => {
     devServer: {
       static: [
         {
-          directory: path.join(__dirname, "public"),
-          publicPath: "/",
+          directory: path.join(__dirname, 'public'),
+          publicPath: '/',
         },
       ],
       hot: true,
@@ -142,11 +142,12 @@ module.exports = (_, args) => {
     },
 
     output: {
-      hashFunction: "xxhash64",
-      filename: "[name]-[contenthash].js",
-      chunkFilename: "[name]-[contenthash].js",
-      path: path.resolve(__dirname, "public", "dist"),
-      publicPath: "/",
+      hashFunction: 'xxhash64',
+      filename: '[name]-[contenthash].js',
+      chunkFilename: '[name]-[contenthash].js',
+      path: path.resolve(__dirname, 'public', 'dist'),
+      publicPath: '/',
+      clean: true,
     },
 
     plugins: [
@@ -155,15 +156,15 @@ module.exports = (_, args) => {
       new FontPreloadPlugin(),
       new CleanWebpackPlugin(),
       new HTMLWebPackPlugin({
-        template: path.join(__dirname, "public", "index.html"),
+        template: path.join(__dirname, 'public', 'index.html'),
         // favicon: './src/image/fav.png',
       }),
       new MiniCSSExtractPlugin({
-        filename: "[name]-[contenthash].css",
-        chunkFilename: "[name]-[contenthash].css",
+        filename: '[name]-[contenthash].css',
+        chunkFilename: '[name]-[contenthash].css',
       }),
       new RobotstxtPlugin({
-        filePath: "./robots.txt",
+        filePath: './robots.txt',
       }),
       // new webpack.ProvidePlugin({
       //   process: 'process/browser',
@@ -191,7 +192,7 @@ module.exports = (_, args) => {
         }),
       ],
       splitChunks: {
-        chunks: "async",
+        chunks: 'async',
         minSize: 200000,
         minRemainingSize: 0,
         maxSize: 400000,
