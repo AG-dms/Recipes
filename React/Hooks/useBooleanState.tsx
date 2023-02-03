@@ -12,7 +12,7 @@ const useBooleanState = (initialValue = false) => {
   }, [])
 
     const toggleValue = useCallback(()=>{
-    setValue(!value)
+    setValue((prev) => !prev)
   }, [])
 
   return [value, setTrueValue, setFalseValue, toggleValue] as const
