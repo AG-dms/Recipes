@@ -1,9 +1,8 @@
 {
-  "name": "pet-service-web",
+  "name": "App_name",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Cimpleo",
-  "license": "MIT",
+  "author": "AG_dms",
   "packageManager": "yarn@3.2.4",
   "scripts": {
     "start": "webpack serve",
